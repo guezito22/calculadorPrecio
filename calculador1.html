@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Precios de Frutas</title>
+    <style>
+        /* Estilos generales para el contenedor */
+        .container {
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Estilos para los títulos */
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        /* Estilos para los select y labels */
+        select, label {
+            display: block;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        /* Estilos para los inputs */
+        select {
+            width: calc(100% - 12px);
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        
+        /* Estilos para el botón */
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #4caf50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        /* Estilos para los resultados */
+        #result {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: #e9e9e9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Precios de Frutas</h1>
+
+        <form id="price-calculator-form">
+            <label for="fruit-type">Tipo de Fruta:</label>
+            <select id="fruit-type" required>
+                <option value="">Selecciona una fruta</option>
+                <option value="manzana">Manzana</option>
+                <option value="plátano">Plátano</option>
+                <option value="naranja">Naranja</option>
+            </select>
+
+            <label for="fruit-size">Tamaño:</label>
+            <select id="fruit-size" required>
+                <option value="">Selecciona el tamaño</option>
+                <option value="pequeño">Pequeño</option>
+                <option value="mediano">Mediano</option>
+                <option value="grande">Grande</option>
+            </select>
+
+            <label for="fruit-damage">Daño:</label>
+            <select id="fruit-damage" required>
+                <option value="">Selecciona el estado de daño</option>
+                <option value="sin-daño">Sin Daño</option>
+                <option value="ligero">Ligero</option>
+                <option value="severo">Severo</option>
+            </select>
+
+            <button type="submit">Calcular Precio</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('price-calculator-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const fruitType = document.getElementById('fruit-type').value;
+            const fruitSize = document.getElementById('fruit-size').value;
+            const fruitDamage = document.getElementById('fruit-damage').value;
+
+            if (fruitType && fruitSize && fruitDamage) {
+                const price = calculatePrice(fruitType, fruitSize, fruitDamage);
+                document.getElementById('result').textContent = `El precio final es: $${price.toFixed(2)}`;
+            }
+        });
+
+        function calculatePrice(type, size, damage) {
+            let basePrice;
+
+            // Base price depending on the fruit type
+            switch (type) {
+                case 'manzana':
+                    basePrice = 33.00;
+                    break;
+                case 'plátano':
+                    basePrice = 20;
+                    break;
+                case 'naranja':
+                    basePrice = 27;
+                    break;
+                default:
+                    basePrice = 0;
+            }
+
+            // Adjust price based on size
+            switch (size) {
+                case 'pequeño':
+                    basePrice *= 1;
+                    break;
+                case 'mediano':
+                    basePrice *= 1.5;
+                    break;
+                case 'grande':
+                    basePrice *= 2;
+                    break;
+                default:
+                    basePrice *= 1;
+            }
+
+            // Adjust price based on damage
+            switch (damage) {
+                case 'sin-daño':
+                    basePrice *= 1;
+                    break;
+                case 'ligero':
+                    basePrice *= 0.9;
+                    break;
+                case 'severo':
+                    basePrice *= 0.7;
+                    break;
+                default:
+                    basePrice *= 1;
+            }
+
+            return basePrice;
+        }
+    </script>
+</body>
+</html>
